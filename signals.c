@@ -3,11 +3,17 @@
 #include <signal.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <string.h>
 
 
 static void signalhandler (int signalNumber) {
     if (signalNumber == SIGINT) {
-      printf("Quitting the program due to SIGINT\n");
+      char * message = "Quitting the program due to SIGINT";
+      printf("%s\n", message);
+      int file = open("errormsg.txt", O_CREAT | O_APPEND | O_WRONLY, 0444);
+      write(file, message, strlen(message));
+      close(file);
       exit(0);
     } else if (signalNumber == SIGUSR1) {
       printf("This is my parent id: %d\n", getppid());
