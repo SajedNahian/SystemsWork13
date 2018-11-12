@@ -9,9 +9,9 @@
 
 static void signalhandler (int signalNumber) {
     if (signalNumber == SIGINT) {
-      char * message = "Quitting the program due to SIGINT";
+      char message []= "Quitting the program due to SIGINT2";
       printf("%s\n", message);
-      int file = open("errormsg.txt", O_CREAT | O_APPEND | O_WRONLY, 0444);
+      int file = open("errormsg.txt", O_CREAT | O_APPEND | O_WRONLY);
       write(file, message, strlen(message));
       close(file);
       exit(0);
